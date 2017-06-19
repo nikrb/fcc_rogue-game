@@ -18,12 +18,14 @@ class App extends Component {
   row_count = 30;
   col_count = 40;
   game = Game( {rows:this.row_count, cols:this.col_count});
+  game.populateLevel();
   control = Control();
   componentWillMount = () => {
     window.addEventListener( 'keydown', this.handleKeydown);
   };
   componentWillUnmount = () => {
     window.removeEventListener( 'keydown', this.handleKeydown);
+    this.game.willUnmount();
   };
   componentDidMount = () => {
     loadLevel()

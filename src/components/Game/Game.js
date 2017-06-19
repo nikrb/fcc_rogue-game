@@ -1,3 +1,4 @@
+import {Wall} from './Wall';
 
 export default function Game( init) {
   const clear = () => {
@@ -15,19 +16,25 @@ export default function Game( init) {
   const setBorder = () => {
     cells.forEach( (row, ndx, arr) => {
       if( ndx === 0 || ndx === arr.length-1){
-        row.forEach( (cell, col) => { cells[ndx][col] = 1;});
+        row.forEach( (cell, col) => { cells[ndx][col] = Wall();});
       } else {
-        cells[ndx][0] = 1;
-        cells[ndx][arr[0].length-1] = 1;
+        cells[ndx][0] = Wall();
+        cells[ndx][arr[0].length-1] = Wall();
       }
     });
   };
   const setBoard = ( cell_map) => {
     cell_map.forEach( (row, ndx) => {
       row.forEach( (cell, col) => {
-        setCell( ndx, col, cell);
+        if( cell){
+          setCell( ndx, col, Wall());
+        }
       });
     });
+  };
+  const populateLevel = () => {
+    // weapons:club sword gun, food:apple sandwich full english breakfast,
+    // monsters:goblin troll balrog, boss
   };
 
   // private init
@@ -41,5 +48,6 @@ export default function Game( init) {
   that.setBoard = setBoard;
   that.setCell = setCell;
   that.setBorder = setBorder;
+  that.populateLevel = populateLevel;
   return that;
 }
