@@ -5,12 +5,12 @@
  */
 export default function Food( init){
   const that = {},
-        {name,health} = init;
+        {name,health_boost} = init;
   const getHealthBoost = () => {
-    return Math.floor( Math.random()*health.max+health.min);
+    return Math.floor( Math.random()*(health_boost.max-health_boost.min)+health_boost.min);
   };
-  that.getColour = () => "green";
-  that.getName = ()=> name;
+  that.getColour = () => { return "green";};
+  that.getName = ()=> { return name;};
   that.getHealthBoost = getHealthBoost;
   return that;
 };
