@@ -1,6 +1,7 @@
 // left:37 up:38 right:39 down:40
 export default function(){
   let that = {};
+  let interval_id = 0;
   let ikeys = { left: false, up: false, right: false, down: false};
   const handleKeyup = (e) => {
     switch( e.keyCode){
@@ -31,12 +32,17 @@ export default function(){
   const tick = () => {
     window.dispatchEvent( new CustomEvent( 'game_tick'));
   };
+  const start = () => {
+    if( interval_id === 0){
+      interval_id = setInterval( tick, 100);
+    }
+  };
   // TODO: do we need to remove these? memory leak?
   window.addEventListener( 'keyup', handleKeyup);
   window.addEventListener( 'keydown', handleKeydown);
-  const interval_id = setInterval( tick, 100);
 
   that.getKeys = getKeys;
+  that.start = start;
   that.willUnmount = willUnmount;
   return that;
 }
