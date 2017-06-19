@@ -11,7 +11,7 @@ export function Monster( init){
     }
   };
   const getHitDamage = () => {
-    return Math.floor( Math.random()*damage.max+damage.min);
+    return Math.floor( Math.random()*(damage.max-damage.min)+damage.min);
   };
   that.getHealth = () => {return health;};
   that.takeDamage = takeDamage;
