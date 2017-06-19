@@ -18,7 +18,6 @@ class App extends Component {
   row_count = 30;
   col_count = 40;
   game = Game( {rows:this.row_count, cols:this.col_count});
-  game.populateLevel();
   control = Control();
   componentWillMount = () => {
     window.addEventListener( 'keydown', this.handleKeydown);
@@ -32,6 +31,7 @@ class App extends Component {
     .then( (response) => {
       this.game.setBoard( response);
       this.game.setBorder();
+      this.game.populateLevel();
       this.setState( {map_cells: this.game.getBoard()});
     });
   };

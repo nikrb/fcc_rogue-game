@@ -1,7 +1,8 @@
 import Game from './Game';
 import {Wall} from './Wall';
+import '../util';
 
-describe( "game board creation", () => {
+describe( "creates a game board", () => {
   it( 'creates board cells', () => {
     const rows = 3, cols = 4;
     const g = Game( {rows, cols});
@@ -34,5 +35,24 @@ describe( "game board creation", () => {
         });
       }
     });
+  });
+});
+
+describe( 'populate board', () => {
+  it( 'creates food', () => {
+    const rows = 8, cols = 8;
+    const g = Game( {rows, cols});
+    g.setBorder();
+    g.populateLevel();
+    const cells = g.getBoard();
+    let food_cells = cells.concatAll().filter( (food) => {
+      if( food){
+        if( food.hasOwnProperty( 'getColour')){
+          return food.getColour() === "green";
+        }
+      }
+      return false;
+    });
+    expect( food_cells.length).toEqual( 3);
   });
 });
