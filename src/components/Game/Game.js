@@ -55,6 +55,12 @@ export default function Game( init) {
   const populateLevel = () => {
     // weapons:club sword gun, food:apple sandwich full english breakfast,
     // monsters:goblin troll balrog, boss
+    populateFoods();
+    populateWeapons();
+    populateMonsters();
+  };
+  // TODO: refactor
+  const populateFoods = () => {
     const foods = [{name:"Apple", health_boost:10},
                   {name:"Sandwich", health_boost:20},
                   {name:"Full English Breakfast", health_boost:50}];
@@ -65,6 +71,31 @@ export default function Game( init) {
         setCell( row_col.row, row_col.col, new_food);
       } else {
         console.log( "create food failed:", food);
+      }
+    });
+  };
+  const populateWeapons = () => {
+    const weapons = [{ name:"Sword", damage:{min:10, max:50}},
+                  { name:"Boomstick", damage:{min:30, max:80}},
+                  { name:"Oozie", damage:{min:50, max:100}}];
+    weapons.forEach( (weapon) => {
+      const row_col = getRandomFreeCell();
+      if( row_col.row && row_col.col){
+        const new_weapon = Weapon( weapon);
+        setCell( row_col.row, row_col.col, new_weapon);
+      } else {
+        console.log( "create weapon failed:", weapon);
+      }
+    });
+  };
+  const populateMonsters = () => {
+    const monsters = [ Goblin(), Troll(), Balrog()];
+    monsters.forEach( (monster) => {
+      const row_col = getRandomFreeCell();
+      if( row_col.row && row_col.col){
+        setCell( row_col.row, row_col.col, monster);
+      } else {
+        console.log( "create monster failed:", monster);
       }
     });
   };
