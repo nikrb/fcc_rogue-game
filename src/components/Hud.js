@@ -8,6 +8,7 @@ export default class Hud extends React.Component {
     const style={ marginBottom:"10px"};
     return (
       <div style={style}>
+        Player Level: {this.props.player_level} XP: {this.props.player_xp} Health: {this.props.player_health}&nbsp;
         <button onClick={this.handleSpotlightToggle} >Spotlight</button>
       </div>
     );
