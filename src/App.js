@@ -11,8 +11,8 @@ class App extends Component {
   cell_width = 8; cell_height = 8;
   state = {
     map_cells : [],
-    spot_centre_x: 20*this.cell_width,
-    spot_centre_y: 15*this.cell_height,
+    spot_centre_x: 20*this.cell_width-this.cell_width/2,
+    spot_centre_y: 15*this.cell_height-this.cell_height/2,
     show_spotlight: true
   };
   spot_radius = 3* this.cell_width;
@@ -21,10 +21,10 @@ class App extends Component {
   game = Game( {rows:this.row_count, cols:this.col_count});
   control = Control();
   componentWillMount = () => {
-    window.addEventListener( 'keydown', this.handleKeydown);
+    window.addEventListener( 'game_tick', this.handleTick);
   };
   componentWillUnmount = () => {
-    window.removeEventListener( 'keydown', this.handleKeydown);
+    window.removeEventListener( 'game_tick', this.handleTick);
     this.game.willUnmount();
   };
   componentDidMount = () => {
@@ -36,7 +36,7 @@ class App extends Component {
       this.setState( {map_cells: this.game.getBoard()});
     });
   };
-  handleKeydown = (e) => {
+  handleTick = () => {
     const ikeys = this.control.getKeys();
     let x = this.state.spot_centre_x;
     let y = this.state.spot_centre_y;

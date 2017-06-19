@@ -26,10 +26,15 @@ export default function(){
   const willUnmount = () => {
     window.removeEventListener( 'keyup', handleKeyup);
     window.removeEventListener( 'keydown', handleKeydown);
+    if( interval_id) clearInterval( interval_id);
+  };
+  const tick = () => {
+    window.dispatchEvent( new CustomEvent( 'game_tick'));
   };
   // TODO: do we need to remove these? memory leak?
   window.addEventListener( 'keyup', handleKeyup);
   window.addEventListener( 'keydown', handleKeydown);
+  const interval_id = setInterval( tick, 100);
 
   that.getKeys = getKeys;
   that.willUnmount = willUnmount;
