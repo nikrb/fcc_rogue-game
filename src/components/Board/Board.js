@@ -13,8 +13,11 @@ export default class Board extends React.Component {
     const rows = this.props.cells.map( ( row, i) => {
       return (
         <div key={i} style={table_row}>{
-          row.map( (col, j) => {
-            const colour = (col)?"black":"white";
+          row.map( (cell, j) => {
+            let colour = "white";
+            if( cell){
+              colour = cell.getColour();
+            }
             return (
               <Cell key={i*100+j}
                 row={i} col={j} colour={colour}
