@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Player from './components/Game/Player';
 import Game from './components/Game/Game';
 import {Board} from './components/Board';
 import Spotlight from './components/Game/Spotlight';
@@ -18,6 +19,7 @@ class App extends Component {
   spot_radius = 3* this.cell_width;
   row_count = 30;
   col_count = 40;
+  player = Player( { row: this.row_count/2, col: this.col_count/2});
   game = Game( {rows:this.row_count, cols:this.col_count});
   control = Control();
   componentWillMount = () => {
@@ -33,17 +35,70 @@ class App extends Component {
       this.game.setBoard( response);
       this.game.setBorder();
       this.game.populateLevel();
-      this.setState( {map_cells: this.game.getBoard()});
+      this.setState( {map_cells: this.game.getBoard()}, () => {
+        this.control.start();
+      });
     });
   };
   handleTick = () => {
     const ikeys = this.control.getKeys();
-    let x = this.state.spot_centre_x;
-    let y = this.state.spot_centre_y;
-    if( ikeys.left) x -= this.cell_width;
-    if( ikeys.right)x += this.cell_width;
-    if( ikeys.up)   y -= this.cell_height;
-    if( ikeys.down) y += this.cell_height;
+    let {row,col} = this.player.getCoords();
+    if( ikeys.left) col -= 1;
+    if( ikeys.right) col += 1;
+    if( ikeys.up) row -= 1;
+    if( ikeys.down) row += 1;
+    const cell = this.state.map_cells[row][col];
+    if( cell){
+      switch( cell.getColour()){
+        case 'green':
+          this.player.setCoords( row, col);
+          const dh = cell.getHealthBoost();
+          this.player.addHealth( dh);
+          const th = this.player.getHealth();
+          console.log( `player health add[${dh}] total[${th}]`);
+          const new_cells = this.state.map_cells.map( ( rows, irow) => {
+            return rows.map( (cell, icol) => {
+              if( row === irow && col === icol){
+                return 0;
+              }
+              return cell;
+            });
+          });
+          this.setState( {map_cells: new_cells});
+          break;
+        case 'orange':
+          const pd = this.player.getHitDamage();
+          const md = cell.getHitDamage();
+          cell.takeDamage( pd);
+          this.player.addHealth( -md);
+          if( this.player.getHealth() < 1){
+            // player died
+          }
+          if( cell.getHealth() < 1){
+            const new_cells = this.state.map_cells.map( ( rows, irow) => {
+              return rows.map( (cell, icol) => {
+                if( row === irow && col === icol){
+                  return 0;
+                }
+                return cell;
+              });
+            });
+            this.player.setCoords( row, col);
+            const xp = cell.getXpBoost();
+            this.player.addXp( xp);
+            this.setState( {map_cells: new_cells});
+          }
+          break;
+        case 'black':
+        default:
+          break;
+      }
+    } else {
+      this.player.setCoords( row, col);
+    }
+    let pc = this.player.getCoords();
+    let x = pc.col*this.cell_width-this.cell_width/2; // this.state.spot_centre_x;
+    let y = pc.row*this.cell_height-this.cell_height/2; // this.state.spot_centre_y;
     this.setState( {spot_centre_x: x, spot_centre_y: y});
   };
   spotlightToggle = () => {
@@ -52,12 +107,24 @@ class App extends Component {
   render() {
     const {spot_centre_x, spot_centre_y} = this.state;
     const spotlight = this.state.show_spotlight;
+    const player_coords = this.player.getCoords();
+    const board_cells = this.state.map_cells.map( ( rows, irow) => {
+      return rows.map( (cell, icol) => {
+        if( player_coords.row === irow && player_coords.col === icol){
+          return this.player;
+        }
+        return cell;
+      });
+    });
     return (
       <div className="App">
         <h2>Map Editor</h2>
-        <Hud onSave={this.handleSave} onSpotlightToggle={this.spotlightToggle}/>
+        <Hud onSave={this.handleSave} onSpotlightToggle={this.spotlightToggle}
+          player_level={this.player.getLevel()}
+          player_xp={this.player.getXp()}
+          player_health={this.player.getHealth()}/>
         <div className="board_container">
-          <Board cells={this.state.map_cells}
+          <Board cells={board_cells}
             cell_width={this.cell_width} cell_height={this.cell_height}/>
           <Spotlight show_spotlight={spotlight}
             x={spot_centre_x} y={spot_centre_y}
