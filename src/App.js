@@ -12,7 +12,8 @@ class App extends Component {
   state = {
     map_cells : [],
     spot_centre_x: 20*this.cell_width,
-    spot_centre_y: 15*this.cell_height
+    spot_centre_y: 15*this.cell_height,
+    show_spotlight: true
   };
   spot_radius = 3* this.cell_width;
   row_count = 30;
@@ -45,16 +46,21 @@ class App extends Component {
     if( ikeys.down) y += this.cell_height;
     this.setState( {spot_centre_x: x, spot_centre_y: y});
   };
+  spotlightToggle = () => {
+    this.setState( {show_spotlight: !this.state.show_spotlight});
+  };
   render() {
     const {spot_centre_x, spot_centre_y} = this.state;
+    const spotlight = this.state.show_spotlight;
     return (
       <div className="App">
         <h2>Map Editor</h2>
-        <Hud onSave={this.handleSave}/>
+        <Hud onSave={this.handleSave} onSpotlightToggle={this.spotlightToggle}/>
         <div className="board_container">
           <Board cells={this.state.map_cells}
             cell_width={this.cell_width} cell_height={this.cell_height}/>
-          <Spotlight x={spot_centre_x} y={spot_centre_y}
+          <Spotlight show_spotlight={spotlight}
+            x={spot_centre_x} y={spot_centre_y}
             r={this.spot_radius}
             width={this.col_count*this.cell_width}
             height={this.row_count*this.cell_height} />

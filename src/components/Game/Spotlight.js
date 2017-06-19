@@ -13,12 +13,13 @@ export default class Spotlight extends React.Component {
     const spot_path = "M0 0 v"+this.props.height+" h"+this.props.width+" v-"+
       this.props.height+" z M "+x+" "+(y-r)+
       " A "+r+" "+r+" 0 1 1 "+x+" "+(y+r)+" A "+r+" "+r+" 0 1 1 "+x+" "+(y-r)+" Z";
-    return (
+    return ( this.props.show_spotlight?
       <svg style={style}>
         <g fillRule="evenodd" fill="black" >
           <path d={spot_path} />
         </g>
       </svg>
+      : <svg></svg>
     );
   };
 }
