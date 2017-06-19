@@ -23,10 +23,15 @@ export default function(){
   const getKeys = () => {
     return ikeys;
   };
+  const willUnmount = () => {
+    window.removeEventListener( 'keyup', handleKeyup);
+    window.removeEventListener( 'keydown', handleKeydown);
+  };
   // TODO: do we need to remove these? memory leak?
   window.addEventListener( 'keyup', handleKeyup);
   window.addEventListener( 'keydown', handleKeydown);
 
   that.getKeys = getKeys;
+  that.willUnmount = willUnmount;
   return that;
 }
