@@ -12,6 +12,7 @@ describe( "creates monsters", () => {
     expect( dmg).toBeGreaterThanOrEqual( 1);
     goblin.takeDamage( dmg);
     expect( goblin.getHealth()).toEqual( health-dmg);
+    expect( goblin.getXpBoost()).toEqual( 10);
   });
   it( 'creates a troll', () => {
     const troll = Troll();
