@@ -97,8 +97,8 @@ class App extends Component {
       this.player.setCoords( row, col);
     }
     let pc = this.player.getCoords();
-    let x = pc.col*this.cell_width-this.cell_width/2; // this.state.spot_centre_x;
-    let y = pc.row*this.cell_height-this.cell_height/2; // this.state.spot_centre_y;
+    let x = (pc.col+1)*this.cell_width-this.cell_width/2; // this.state.spot_centre_x;
+    let y = (pc.row+1)*this.cell_height-this.cell_height/2; // this.state.spot_centre_y;
     this.setState( {spot_centre_x: x, spot_centre_y: y});
   };
   spotlightToggle = () => {
