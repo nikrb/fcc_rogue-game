@@ -1,6 +1,6 @@
 export function Monster( init){
   const that = {};
-  let {name, health, damage, xp_boost} = init;
+  let {name, health, damage, xp_boost, colour} = init;
   const getName = () => {
     return name;
   };
@@ -17,7 +17,7 @@ export function Monster( init){
   that.takeDamage = takeDamage;
   that.getHitDamage = getHitDamage;
   that.getName = getName;
-  that.getColour = () => { return "orange";};
+  that.getColour = () => { return colour;};
   that.getXpBoost = ()=>xp_boost;
   return that;
 };
@@ -27,7 +27,9 @@ export function Goblin(){
       max_health : 100,
       health : 100,
       xp_boost: 10,
-      damage : { min:1, max:25}});
+      damage : { min:1, max:25},
+      colour: "yellow"
+    });
   return that;
 };
 
@@ -36,7 +38,9 @@ export function Troll(){
       max_health : 200,
       health : 200,
       xp_boost: 20,
-      damage : { min: 10, max:50}});
+      damage : { min: 10, max:50},
+      colour: "orange"
+    });
   return that;
 };
 
@@ -45,6 +49,8 @@ export function Balrog() {
       max_health : 300,
       health : 300,
       xp_boost: 40,
-      damage : { min: 20, max:75}});
+      damage : { min: 20, max:75},
+      colour : "red"
+    });
   return that;
 };

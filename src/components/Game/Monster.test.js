@@ -5,7 +5,7 @@ describe( "creates monsters", () => {
     const goblin = Goblin();
     const health = goblin.getHealth();
     expect( goblin.getName()).toEqual( "Goblin");
-    expect( goblin.getColour()).toEqual( 'orange');
+    expect( goblin.getColour()).toEqual( 'yellow');
     expect( goblin.getHealth()).toEqual( 100);
     const dmg = goblin.getHitDamage();
     expect( dmg).toBeLessThanOrEqual( 25);
