@@ -66,7 +66,9 @@ class App extends Component {
           });
           this.setState( {map_cells: new_cells});
           break;
+        case 'yellow':
         case 'orange':
+        case 'red':
           const pd = this.player.getHitDamage();
           const md = cell.getHitDamage();
           cell.takeDamage( pd);
@@ -88,6 +90,20 @@ class App extends Component {
             this.player.addXp( xp);
             this.setState( {map_cells: new_cells});
           }
+          break;
+        case 'purple':
+          this.player.setCoords( row, col);
+          this.player.setWeapon( cell);
+          console.log( `player weapon [${cell.getName()}]`);
+          const newcells = this.state.map_cells.map( ( rows, irow) => {
+            return rows.map( (cell, icol) => {
+              if( row === irow && col === icol){
+                return 0;
+              }
+              return cell;
+            });
+          });
+          this.setState( {map_cells: newcells});
           break;
         case 'black':
         default:
@@ -122,7 +138,8 @@ class App extends Component {
         <Hud onSave={this.handleSave} onSpotlightToggle={this.spotlightToggle}
           player_level={this.player.getLevel()}
           player_xp={this.player.getXp()}
-          player_health={this.player.getHealth()}/>
+          player_health={this.player.getHealth()}
+          player_weapon={this.player.getWeapon().getName()}/>
         <div className="board_container">
           <Board cells={board_cells}
             cell_width={this.cell_width} cell_height={this.cell_height}/>
