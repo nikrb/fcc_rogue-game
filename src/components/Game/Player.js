@@ -26,6 +26,9 @@ export default function Player( init){
     xp += new_xp;
     if( xp >= xp_levels[level]) level += 1;
   };
+  const setWeapon = ( wpn)=>{
+    weapon = wpn;
+  };
   that.getColour = () => "black";
   that.getName = ()=> "Player";
   that.getCoords = getCoords;
@@ -36,5 +39,7 @@ export default function Player( init){
   that.addXp = addXp;
   that.getLevel = () => level;
   that.getXp = () => xp;
+  that.getWeapon = () => weapon;
+  that.setWeapon = setWeapon;
   return that;
 };
