@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Player from './components/Game/Player';
 import Game from './components/Game/Game';
+import Bubble from './components/Game/Bubble';
 import {Board} from './components/Board';
 import Spotlight from './components/Game/Spotlight';
 import Hud from './components/Hud';
@@ -14,8 +15,10 @@ class App extends Component {
     map_cells : [],
     spot_centre_x: 20*this.cell_width-this.cell_width/2,
     spot_centre_y: 15*this.cell_height-this.cell_height/2,
-    show_spotlight: true
+    show_spotlight: true,
+    bubble_list: []
   };
+  bubble_sequence_ndx = 0;
   spot_radius = 3* this.cell_width;
   row_count = 30;
   col_count = 40;
@@ -39,6 +42,12 @@ class App extends Component {
         this.control.start();
       });
     });
+  };
+  bubbleFinished = () => {
+    const nl = this.state.bubble_list.filter( ( item, ndx) => {
+      return (ndx !== 0);
+    });
+    this.setState( {bubble_list: nl});
   };
   handleTick = () => {
     const ikeys = this.control.getKeys();
@@ -71,6 +80,19 @@ class App extends Component {
         case 'red':
           const pd = this.player.getHitDamage();
           const md = cell.getHitDamage();
+          // set up damage bubbles
+          const bubble_top = this.state.spot_centre_y - this.spot_radius;
+          const monster_left = this.state.spot_centre_x - 50;
+          const player_left = this.state.spot_centre_x + 50;
+          const monster_key = this.bubble_sequence_ndx++;
+          const player_key = this.bubble_sequence_ndx++;
+          const new_bubble_list = [...this.state.bubble_list,
+            <Bubble key={monster_key} top={bubble_top} left={monster_left}
+              onFinished={this.bubbleFinished} text={pd} />,
+            <Bubble key={player_key} top={bubble_top} left={player_left}
+              onFinished={this.bubbleFinished} text={md} />
+          ];
+
           cell.takeDamage( pd);
           this.player.addHealth( -md);
           if( this.player.getHealth() < 1){
@@ -88,7 +110,9 @@ class App extends Component {
             this.player.setCoords( row, col);
             const xp = cell.getXpBoost();
             this.player.addXp( xp);
-            this.setState( {map_cells: new_cells});
+            this.setState( {map_cells: new_cells, bubble_list: new_bubble_list});
+          } else {
+            this.setState( { bubble_list: new_bubble_list});
           }
           break;
         case 'purple':
@@ -141,6 +165,7 @@ class App extends Component {
           player_health={this.player.getHealth()}
           player_weapon={this.player.getWeapon().getName()}/>
         <div className="board_container">
+          {this.state.bubble_list}
           <Board cells={board_cells}
             cell_width={this.cell_width} cell_height={this.cell_height}/>
           <Spotlight show_spotlight={spotlight}
