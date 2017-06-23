@@ -60,7 +60,7 @@ class App extends Component {
     const cell = this.state.map_cells[row][col];
     if( cell){
       switch( cell.getColour()){
-        case 'green':
+        case 'limegreen':
           this.player.setCoords( row, col);
           const dh = cell.getHealthBoost();
           this.player.addHealth( dh);
@@ -119,7 +119,7 @@ class App extends Component {
             this.setState( { bubble_list: new_bubble_list});
           }
           break;
-        case 'purple':
+        case 'mediumorchid':
           this.player.setCoords( row, col);
           this.player.setWeapon( cell);
           console.log( `player weapon [${cell.getName()}]`);
