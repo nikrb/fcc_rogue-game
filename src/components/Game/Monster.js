@@ -24,10 +24,10 @@ export const Monster = ( init) => {
 
 export const Goblin = () =>{
   let that = Monster( { name: "Goblin",
-      max_health : 100,
-      health : 100,
+      max_health : 50,
+      health : 50,
       xp_boost: 10,
-      damage : { min:1, max:25},
+      damage : { min:1, max:10},
       colour: "yellow"
     });
   return that;
@@ -35,10 +35,10 @@ export const Goblin = () =>{
 
 export const Troll = ()=>{
   let that = Monster( {name:"Troll",
-      max_health : 200,
-      health : 200,
+      max_health : 100,
+      health : 100,
       xp_boost: 20,
-      damage : { min: 10, max:50},
+      damage : { min: 10, max:30},
       colour: "orange"
     });
   return that;
@@ -46,10 +46,10 @@ export const Troll = ()=>{
 
 export const Balrog = ()=> {
   let that = Monster( {name:"Balrog",
-      max_health : 300,
-      health : 300,
+      max_health : 200,
+      health : 200,
       xp_boost: 40,
-      damage : { min: 20, max:75},
+      damage : { min: 20, max:50},
       colour : "red"
     });
   return that;
