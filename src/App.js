@@ -37,10 +37,7 @@ class App extends Component {
     this.game.willUnmount();
   };
   componentDidMount = () => {
-    // this.startGame();
-
-    this.game_won = true;
-    this.setState( { game_over: true});
+    this.startGame();
   };
   startGame = () => {
     loadLevel()
@@ -69,12 +66,14 @@ class App extends Component {
     if( ikeys.down) row += 1;
     const cell = this.state.map_cells[row][col];
     if( cell){
+      let new_cells = this.state.map_cells;
+      let new_bubble_list = this.state.bubble_list;
       switch( cell.getColour()){
         case 'limegreen':
           this.player.setCoords( row, col);
           const dh = cell.getHealthBoost();
           this.player.addHealth( dh);
-          const new_cells = this.state.map_cells.map( ( rows, irow) => {
+          new_cells = this.state.map_cells.map( ( rows, irow) => {
             return rows.map( (cell, icol) => {
               if( row === irow && col === icol){
                 return 0;
@@ -90,7 +89,6 @@ class App extends Component {
           const pd = this.player.getHitDamage();
           const md = cell.getHitDamage();
           // set up damage bubbles
-          let new_bubble_list = [];
           if( this.state.show_bubbles){
             const bubble_top = this.state.spot_centre_y - this.spot_radius;
             const monster_left = this.state.spot_centre_x - 50;
@@ -115,7 +113,7 @@ class App extends Component {
               this.game_won = true;
               this.control.stop();
             }
-            const new_cells = this.state.map_cells.map( ( rows, irow) => {
+            new_cells = this.state.map_cells.map( ( rows, irow) => {
               return rows.map( (cell, icol) => {
                 if( row === irow && col === icol){
                   return 0;
@@ -126,17 +124,15 @@ class App extends Component {
             this.player.setCoords( row, col);
             const xp = cell.getXpBoost();
             this.player.addXp( xp);
-            this.setState( {map_cells: new_cells, bubble_list: new_bubble_list,
-              game_over: game_over});
-          } else {
-            if( this.player.getHealth() < 1){
-              // player died
-              game_over = true;
-              this.game_won = false;
-              this.control.stop();
-            }
-            this.setState( { bubble_list: new_bubble_list, game_over: game_over});
           }
+          if( this.player.getHealth() < 1){
+            // player died
+            game_over = true;
+            this.game_won = false;
+            this.control.stop();
+          }
+          this.setState( { map_cells: new_cells, bubble_list: new_bubble_list,
+            game_over: game_over});
           break;
         case 'mediumorchid':
           this.player.setCoords( row, col);
@@ -190,7 +186,7 @@ class App extends Component {
     });
     let game_over_dialogue = "";
     if( this.state.game_over){
-      const message = this.state.game_won?"You Won":"You Lost";
+      const message = this.game_won?"You Won":"You Lost";
       game_over_dialogue = <GameOverDlg onYes={this.handleYes} onNo={this.handleNo} message={message} />
     }
     return (
