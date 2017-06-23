@@ -23,9 +23,8 @@ export default class Bubble extends React.Component {
       opacity: 1,
       top: this.props.top+"px",
       left: this.props.left+"px",
-      zIndex: "1000",
+      zIndex: "500",
       transition: "1.0s"
-      // animation: "vertical_anim 1s forwards"
     }
     let style={...box};
     if( this.state.move_it){
