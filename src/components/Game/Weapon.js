@@ -9,7 +9,7 @@ export default function Weapon( init){
   const getHitDamage = () => {
     return Math.floor( Math.random()*(damage.max-damage.min)+damage.min);
   };
-  that.getColour = () => "purple";
+  that.getColour = () => "mediumorchid";
   that.getName = ()=> name;
   that.getHitDamage = getHitDamage;
   return that;

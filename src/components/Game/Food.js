@@ -9,7 +9,7 @@ export default function Food( init){
   const getHealthBoost = () => {
     return health_boost;
   };
-  that.getColour = () => { return "green";};
+  that.getColour = () => { return "limegreen";};
   that.getName = ()=> { return name;};
   that.getHealthBoost = getHealthBoost;
   return that;

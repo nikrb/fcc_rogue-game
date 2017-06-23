@@ -10,6 +10,10 @@ export default class Hud extends React.Component {
   };
   render = () => {
     const style={ marginBottom:"10px"};
+    const buttons={
+      display: "flex",
+      justifyContent: "space-around"
+    }
     return (
       <div style={style}>
         <div>
@@ -17,7 +21,7 @@ export default class Hud extends React.Component {
           Health: {this.props.player_health}&nbsp; Weapon: {this.props.player_weapon}
         </div>
         <Legend />
-        <div>
+        <div style={buttons}>
           <button onClick={this.handleSpotlightToggle} >Spotlight</button>
           <button onClick={this.handleBubbleToggle} >Bubbles</button>
         </div>

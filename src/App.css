@@ -8,3 +8,13 @@
 .board_container {
   position: relative;
 }
+
+button {
+  outline: none;
+  margin: 5px;
+  background: linear-gradient( to top, limegreen, lime); /* lawngreen, springgreen); */
+  border-radius: 10px;
+}
+button:hover {
+  box-shadow: 0px 0px 10px yellow;
+}

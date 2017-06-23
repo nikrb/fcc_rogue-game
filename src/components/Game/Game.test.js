@@ -48,7 +48,7 @@ describe( 'populate board', () => {
     let food_cells = cells.concatAll().filter( (food) => {
       if( food){
         if( food.hasOwnProperty( 'getColour')){
-          return food.getColour() === "green";
+          return food.getColour() === "limegreen";
         }
       }
       return false;

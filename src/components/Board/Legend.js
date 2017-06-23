@@ -26,9 +26,9 @@ export default () => {
           <Cell width={8} height={8} colour="red" />
         </span>
       <span style={padLarge}>Food:</span>
-        <Cell width={8} height={8} colour="green" />
+        <Cell width={8} height={8} colour="limegreen" />
       <span style={padLarge}>Weapons:</span>
-        <Cell width={8} height={8} colour="purple" />
+        <Cell width={8} height={8} colour="mediumorchid" />
     </div>
   );
 };
