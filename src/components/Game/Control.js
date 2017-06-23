@@ -1,5 +1,5 @@
 // left:37 up:38 right:39 down:40
-export default function(){
+export default () => {
   let that = {};
   let interval_id = 0;
   let ikeys = { left: false, up: false, right: false, down: false};
