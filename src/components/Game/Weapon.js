@@ -3,7 +3,7 @@
 
   @param {name:"name", damage: { min: a, max: b}}
  */
-export default function Weapon( init){
+export default ( init) => {
   const that = {},
         {name,damage} = init;
   const getHitDamage = () => {

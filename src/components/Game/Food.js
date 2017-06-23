@@ -3,7 +3,7 @@
 
   @param {name:"name", health: { min: a, max: b}}
  */
-export default function Food( init){
+export default ( init) => {
   const that = {},
         {name,health_boost} = init;
   const getHealthBoost = () => {

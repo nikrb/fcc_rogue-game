@@ -1,4 +1,4 @@
-export function Wall() {
+export const Wall = () => {
   let that = {};
   const getColour = () => { return "black";};
   that.getColour = getColour;

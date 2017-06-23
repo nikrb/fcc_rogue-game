@@ -1,4 +1,4 @@
-export function Monster( init){
+export const Monster = ( init) => {
   const that = {};
   let {name, health, damage, xp_boost, colour} = init;
   const getName = () => {
@@ -22,7 +22,7 @@ export function Monster( init){
   return that;
 };
 
-export function Goblin(){
+export const Goblin = () =>{
   let that = Monster( { name: "Goblin",
       max_health : 100,
       health : 100,
@@ -33,7 +33,7 @@ export function Goblin(){
   return that;
 };
 
-export function Troll(){
+export const Troll = ()=>{
   let that = Monster( {name:"Troll",
       max_health : 200,
       health : 200,
@@ -44,7 +44,7 @@ export function Troll(){
   return that;
 };
 
-export function Balrog() {
+export const Balrog = ()=> {
   let that = Monster( {name:"Balrog",
       max_health : 300,
       health : 300,

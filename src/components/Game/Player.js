@@ -1,6 +1,6 @@
 import Weapon from './Weapon';
 
-export default function Player( init){
+export default ( init) => {
   const that = {};
   let { row, col} = init;
   const xp_levels = [ 0, 20, 40, 60, 80, 100];
