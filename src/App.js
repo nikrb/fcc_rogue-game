@@ -65,7 +65,6 @@ class App extends Component {
           const dh = cell.getHealthBoost();
           this.player.addHealth( dh);
           const th = this.player.getHealth();
-          console.log( `player health add[${dh}] total[${th}]`);
           const new_cells = this.state.map_cells.map( ( rows, irow) => {
             return rows.map( (cell, icol) => {
               if( row === irow && col === icol){
@@ -122,7 +121,6 @@ class App extends Component {
         case 'mediumorchid':
           this.player.setCoords( row, col);
           this.player.setWeapon( cell);
-          console.log( `player weapon [${cell.getName()}]`);
           const newcells = this.state.map_cells.map( ( rows, irow) => {
             return rows.map( (cell, icol) => {
               if( row === irow && col === icol){
