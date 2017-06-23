@@ -23,7 +23,9 @@ export default class Hud extends React.Component {
         <Legend />
         <div style={buttons}>
           <button onClick={this.handleSpotlightToggle} >Spotlight</button>
-          <button onClick={this.handleBubbleToggle} >Bubbles</button>
+          <button onClick={this.handleBubbleToggle} title="Damage bubbles (experimental)" >
+            Bubbles
+          </button>
         </div>
       </div>
     );
