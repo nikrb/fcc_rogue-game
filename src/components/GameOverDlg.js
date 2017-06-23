@@ -7,7 +7,7 @@ export default (props) => {
     left: '0px',
     width: '100%',
     height: '100%',
-    zIndex: '99',
+    zIndex: '1000',
     backgroundColor: 'rgba(0,0,0,0.9)',
   };
   const dlg={
