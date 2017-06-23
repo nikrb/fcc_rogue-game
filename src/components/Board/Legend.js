@@ -1,7 +1,7 @@
 import React from 'react';
 import Cell from './Cell';
 
-export default function() {
+export default () => {
   const legend={
     display: "flex",
     justifyContent: "center",
@@ -31,4 +31,4 @@ export default function() {
         <Cell width={8} height={8} colour="purple" />
     </div>
   );
-}
+};
