@@ -7,6 +7,7 @@ import Spotlight from './components/Game/Spotlight';
 import Hud from './components/Hud';
 import Control from './components/Game/Control';
 import {loadLevel} from './Actions';
+import GameOverDlg from './components/GameOverDlg';
 import './App.css';
 
 class App extends Component {
@@ -17,8 +18,10 @@ class App extends Component {
     spot_centre_y: 15*this.cell_height-this.cell_height/2,
     show_spotlight: true,
     show_bubbles: false,
-    bubble_list: []
+    bubble_list: [],
+    game_over: false
   };
+  game_won = true;
   bubble_sequence_ndx = 0;
   spot_radius = 3* this.cell_width;
   row_count = 30;
@@ -34,13 +37,20 @@ class App extends Component {
     this.game.willUnmount();
   };
   componentDidMount = () => {
+    // this.startGame();
+
+    this.game_won = false;
+    this.setState( { game_over: true});
+  };
+  startGame = () => {
     loadLevel()
     .then( (response) => {
       this.game.setBoard( response);
       this.game.setBorder();
       this.game.populateLevel();
-      this.setState( {map_cells: this.game.getBoard()}, () => {
+      this.setState( {map_cells: this.game.getBoard(), game_over:false}, () => {
         this.control.start();
+        this.player.setCoords( this.row_count/2, this.col_count/2);
       });
     });
   };
@@ -64,7 +74,6 @@ class App extends Component {
           this.player.setCoords( row, col);
           const dh = cell.getHealthBoost();
           this.player.addHealth( dh);
-          const th = this.player.getHealth();
           const new_cells = this.state.map_cells.map( ( rows, irow) => {
             return rows.map( (cell, icol) => {
               if( row === irow && col === icol){
@@ -98,10 +107,14 @@ class App extends Component {
 
           cell.takeDamage( pd);
           this.player.addHealth( -md);
-          if( this.player.getHealth() < 1){
-            // player died
-          }
+          let game_over = false;
           if( cell.getHealth() < 1){
+            if( cell.getName() === "Balrog"){
+              // player won
+              game_over = true;
+              this.game_won = true;
+              this.control.stop();
+            }
             const new_cells = this.state.map_cells.map( ( rows, irow) => {
               return rows.map( (cell, icol) => {
                 if( row === irow && col === icol){
@@ -113,9 +126,16 @@ class App extends Component {
             this.player.setCoords( row, col);
             const xp = cell.getXpBoost();
             this.player.addXp( xp);
-            this.setState( {map_cells: new_cells, bubble_list: new_bubble_list});
+            this.setState( {map_cells: new_cells, bubble_list: new_bubble_list,
+              game_over: game_over});
           } else {
-            this.setState( { bubble_list: new_bubble_list});
+            if( this.player.getHealth() < 1){
+              // player died
+              game_over = true;
+              this.game_won = false;
+              this.control.stop();
+            }
+            this.setState( { bubble_list: new_bubble_list, game_over: game_over});
           }
           break;
         case 'mediumorchid':
@@ -149,6 +169,13 @@ class App extends Component {
   bubbleToggle = () => {
     this.setState( {show_bubbles: !this.state.show_bubbles});
   };
+  handleYes = () => {
+    this.setState( {game_over:false});
+    this.startGame();
+  };
+  handleNo = () => {
+    this.setState( {game_over:false});
+  };
   render() {
     const {spot_centre_x, spot_centre_y} = this.state;
     const spotlight = this.state.show_spotlight;
@@ -161,9 +188,15 @@ class App extends Component {
         return cell;
       });
     });
+    let game_over_dialogue = "";
+    if( this.state.game_over){
+      const message = this.state.game_won?"You Won":"You Lost";
+      game_over_dialogue = <GameOverDlg onYes={this.handleYes} onNo={this.handleNo} message={message} />
+    }
     return (
       <div className="App">
-        <h2>Map Editor</h2>
+        <h2>Rogue-like Game</h2>
+        {game_over_dialogue}
         <Hud onSave={this.handleSave} onSpotlightToggle={this.spotlightToggle}
           onBubbleToggle={this.bubbleToggle}
           player_level={this.player.getLevel()}

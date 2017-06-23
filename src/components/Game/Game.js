@@ -27,6 +27,7 @@ export default function Game( init) {
     });
   };
   const setBoard = ( cell_map) => {
+    clearBoard();
     cell_map.forEach( (row, ndx) => {
       row.forEach( (cell, col) => {
         if( cell){
