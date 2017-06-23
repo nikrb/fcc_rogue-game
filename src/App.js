@@ -16,6 +16,7 @@ class App extends Component {
     spot_centre_x: 20*this.cell_width-this.cell_width/2,
     spot_centre_y: 15*this.cell_height-this.cell_height/2,
     show_spotlight: true,
+    show_bubbles: false,
     bubble_list: []
   };
   bubble_sequence_ndx = 0;
@@ -81,17 +82,20 @@ class App extends Component {
           const pd = this.player.getHitDamage();
           const md = cell.getHitDamage();
           // set up damage bubbles
-          const bubble_top = this.state.spot_centre_y - this.spot_radius;
-          const monster_left = this.state.spot_centre_x - 50;
-          const player_left = this.state.spot_centre_x + 50;
-          const monster_key = this.bubble_sequence_ndx++;
-          const player_key = this.bubble_sequence_ndx++;
-          const new_bubble_list = [...this.state.bubble_list,
-            <Bubble key={monster_key} top={bubble_top} left={monster_left}
-              onFinished={this.bubbleFinished} text={pd} />,
-            <Bubble key={player_key} top={bubble_top} left={player_left}
-              onFinished={this.bubbleFinished} text={md} />
-          ];
+          let new_bubble_list = [];
+          if( this.state.show_bubbles){
+            const bubble_top = this.state.spot_centre_y - this.spot_radius;
+            const monster_left = this.state.spot_centre_x - 50;
+            const player_left = this.state.spot_centre_x + 50;
+            const monster_key = this.bubble_sequence_ndx++;
+            const player_key = this.bubble_sequence_ndx++;
+            new_bubble_list = [...this.state.bubble_list,
+              <Bubble key={monster_key} top={bubble_top} left={monster_left}
+                onFinished={this.bubbleFinished} text={pd} />,
+              <Bubble key={player_key} top={bubble_top} left={player_left}
+                onFinished={this.bubbleFinished} text={md} />
+            ];
+          }
 
           cell.takeDamage( pd);
           this.player.addHealth( -md);
@@ -144,6 +148,9 @@ class App extends Component {
   spotlightToggle = () => {
     this.setState( {show_spotlight: !this.state.show_spotlight});
   };
+  bubbleToggle = () => {
+    this.setState( {show_bubbles: !this.state.show_bubbles});
+  };
   render() {
     const {spot_centre_x, spot_centre_y} = this.state;
     const spotlight = this.state.show_spotlight;
@@ -160,12 +167,13 @@ class App extends Component {
       <div className="App">
         <h2>Map Editor</h2>
         <Hud onSave={this.handleSave} onSpotlightToggle={this.spotlightToggle}
+          onBubbleToggle={this.bubbleToggle}
           player_level={this.player.getLevel()}
           player_xp={this.player.getXp()}
           player_health={this.player.getHealth()}
           player_weapon={this.player.getWeapon().getName()}/>
         <div className="board_container">
-          {this.state.bubble_list}
+          {this.state.show_bubbles?this.state.bubble_list:""}
           <Board cells={board_cells}
             cell_width={this.cell_width} cell_height={this.cell_height}/>
           <Spotlight show_spotlight={spotlight}
