@@ -39,7 +39,7 @@ class App extends Component {
   componentDidMount = () => {
     // this.startGame();
 
-    this.game_won = false;
+    this.game_won = true;
     this.setState( { game_over: true});
   };
   startGame = () => {
@@ -50,7 +50,7 @@ class App extends Component {
       this.game.populateLevel();
       this.setState( {map_cells: this.game.getBoard(), game_over:false}, () => {
         this.control.start();
-        this.player.setCoords( this.row_count/2, this.col_count/2);
+        this.player.reset();
       });
     });
   };

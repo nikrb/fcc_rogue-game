@@ -3,11 +3,21 @@ import Weapon from './Weapon';
 export default ( init) => {
   const that = {};
   let { row, col} = init;
+  const start_row = row;
+  const start_col = col;
   const xp_levels = [ 0, 20, 40, 60, 80, 100];
   let health = 100,
       level = 1,
       xp = 0;
   let weapon = Weapon( { name: "Club", damage: { min: 20, max:50}});
+  const reset =  () => {
+    health = 100;
+    level = 1;
+    xp = 0;
+    weapon = Weapon( { name: "Club", damage: { min: 20, max:50}});
+    row = start_row;
+    col = start_col;
+  };
   const getCoords = () => {
     return { row: row, col: col};
   };
@@ -41,5 +51,6 @@ export default ( init) => {
   that.getXp = () => xp;
   that.getWeapon = () => weapon;
   that.setWeapon = setWeapon;
+  that.reset = reset;
   return that;
 };
