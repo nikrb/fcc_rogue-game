@@ -40,16 +40,24 @@ class App extends Component {
     this.startGame();
   };
   startGame = () => {
-    loadLevel()
-    .then( (response) => {
-      this.game.setBoard( response);
-      this.game.setBorder();
-      this.game.populateLevel();
-      this.setState( {map_cells: this.game.getBoard(), game_over:false}, () => {
-        this.control.start();
-        this.player.reset();
-      });
+    const response = loadLevel();
+    this.game.setBoard( response);
+    this.game.setBorder();
+    this.game.populateLevel();
+    this.setState( {map_cells: this.game.getBoard(), game_over:false}, () => {
+      this.control.start();
+      this.player.reset();
     });
+    // FIXME: github.io issues
+    // .then( (response) => {
+    //   this.game.setBoard( response);
+    //   this.game.setBorder();
+    //   this.game.populateLevel();
+    //   this.setState( {map_cells: this.game.getBoard(), game_over:false}, () => {
+    //     this.control.start();
+    //     this.player.reset();
+    //   });
+    // });
   };
   bubbleFinished = () => {
     const nl = this.state.bubble_list.filter( ( item, ndx) => {

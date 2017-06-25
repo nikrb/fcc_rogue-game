@@ -1,9 +1,14 @@
+import level from './level.json';
+
 export function loadLevel(){
-  return fetch( '/level.json')
-  .then( checkStatus)
-  .then( parseJSON);
+  // dirty fix for github.io demo
+  return level;
+  // return fetch( '/level.json')
+  // .then( checkStatus)
+  // .then( parseJSON);
 };
 
+/* github.io workaround doesn't need these
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
@@ -18,3 +23,4 @@ function checkStatus(response) {
 function parseJSON(response) {
   return response.json();
 }
+*/
