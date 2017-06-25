@@ -9,12 +9,12 @@ export default ( init) => {
   let health = 100,
       level = 1,
       xp = 0;
-  let weapon = Weapon( { name: "Club", damage: { min: 20, max:50}});
+  let weapon = Weapon( { name: "Club", damage: { min: 5, max:10}});
   const reset =  () => {
     health = 100;
     level = 1;
     xp = 0;
-    weapon = Weapon( { name: "Club", damage: { min: 20, max:50}});
+    weapon = Weapon( { name: "Club", damage: { min: 5, max:10}});
     row = start_row;
     col = start_col;
   };

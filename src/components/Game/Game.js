@@ -76,9 +76,9 @@ export default function Game( init) {
     });
   };
   const populateWeapons = () => {
-    const weapons = [{ name:"Sword", damage:{min:10, max:50}},
-                  { name:"Boomstick", damage:{min:30, max:80}},
-                  { name:"Oozie", damage:{min:50, max:100}}];
+    const weapons = [{ name:"Sword", damage:{min:10, max:20}},
+                  { name:"Boomstick", damage:{min:15, max:30}},
+                  { name:"Oozie", damage:{min:20, max:50}}];
     weapons.forEach( (weapon) => {
       const row_col = getRandomFreeCell();
       if( row_col.row && row_col.col){

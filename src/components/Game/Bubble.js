@@ -24,11 +24,11 @@ export default class Bubble extends React.Component {
       top: this.props.top+"px",
       left: this.props.left+"px",
       zIndex: "500",
-      transition: "1.0s"
+      transition: "2.0s"
     }
     let style={...box};
     if( this.state.move_it){
-      style.top = (this.props.top-100)+"px";
+      style.top = (this.props.top-150)+"px";
       style.opacity = 0;
     }
     return (
