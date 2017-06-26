@@ -1,4 +1,4 @@
-project for fcc rogue like dungeon crawler.
+project for fcc rogue like dungeon crawler. [demo](https://nikrb.github.io/fcc_rogue-game)
 
 Unit testing with Jest.
 
