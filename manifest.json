@@ -1,6 +1,6 @@
 {
-  "short_name": "Recipes",
-  "name": "fcc recipe book",
+  "short_name": "Rogue",
+  "name": "fcc rogue-like dungeon crawler",
   "icons": [
     {
       "src": "favicon.ico",
